@@ -23,8 +23,13 @@ const removeLogs = () => {
                     err ? console.error(`Error deleting file '${file}'`) : console.log(`Deleting file '${file}'`)
                 );
             });
+            
         });
+        fs.rm(target, { recursive: true, force: true }, err => {
+            // print error if any otherwise print success message
+            err ? console.error(err.message) : console.log(`directory ${target} was deleted!`)
+        })
     }
 };
 removeLogs();
-createLogs();
+//createLogs();

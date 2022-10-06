@@ -14,22 +14,27 @@ const createLogs = () => {
 };
 
 const removeLogs = () => {
-    const target = "./logs";
-    if (fs.existsSync(target)) {
-        process.chdir(target);
-        fs.readdir(process.cwd(), (err, files) => {
-            files.forEach((file) => {
-                fs.unlink(file, (err) =>
-                    err ? console.error(`Error deleting file '${file}'`) : console.log(`Deleting file '${file}'`)
-                );
-            });
-            
-        });
-        fs.rm(target, { recursive: true, force: true }, err => {
-            // print error if any otherwise print success message
-            err ? console.error(err.message) : console.log(`directory ${target} was deleted!`)
-        })
+    const dir = "./logs";
+    if (fs.existsSync(dir)) {
+        let files = fs.readdirSync(dir)
+        if (files.length != 0) {
+            for (let x = 0; x < files.length; x++) {
+                fs.unlinkSync(`./logs/log${x}.txt`)
+                console.log(`delete file ...log${x}.txt`)
+            }
+
+        }
+        else {
+            console.log("No files found.")
+        }
+        fs.rmdirSync(dir)
+        console.log("Deleted Logs directory.")
     }
-};
-removeLogs();
+    else {
+        console.log("Directory does not exist.")
+    }
+}
+
 //createLogs();
+
+removeLogs();
